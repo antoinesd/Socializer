@@ -22,63 +22,31 @@
             <h:outputText id="counter"/>
         </h:panelGrid>
 
-        <p:dataList id="tweetList"
-                    var="tweet"
-                    type="none"
-                    value="#{twitterTimelineServiceImpl.homeTimeline}"
-                >
-            <f:facet name="header">
-                Tweets
-            </f:facet>
-            <p:panel>
-                <h:panelGrid columns="3" cellpadding="10" columnClasses="verticalTop,verticalTopFixed,verticalTop">
-                    <p:column>
-                        <p:graphicImage id="pict" value="#{tweet.profileImageUrl}" height="48" width="48"/>
-                        <p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
-                    </p:column>
-                    <p:column style="width:200px;">
-                        <h:outputText value="@#{tweet.fromUser}" styleClass="author"/>
-                        <br/>
-                        <h:outputText value="#{tweet.text}"/>
-                        <br/>
-                        <!--Via ${tweet.source}"-->
-                        <br/>
-                        <p:fieldset legend="En réponse à "
-                                    toggleable="true"
-                                    rendered="#{not empty tweet.inReplyToStatusId}"
-                                >
-                            <h:outputText value="@#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).fromUser}" styleClass="author"/>
-                            <br/>
-                            <h:outputText
-                                    value="#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).text}"
-                                    styleClass="reponse"
-                                    />
-                        </p:fieldset>
-                    </p:column>
+        <p:tabView>
+            <p:tab title="Timeline">
+                <ui:include src="twitter-timeline.xhtml">
+                    <ui:param name="timeline" value="#{twitterTimelineServiceImpl.homeTimeline}"/>
+                    <ui:param name="id" value="tlTimeline"/>
 
-                    <p:column>
-                        <h:outputText value="#{tweet.createdAt}" styleClass="tweetInfo">
-                            <f:converter converterId="org.ocpsoft.PrettyTimeConverter"/>
-                        </h:outputText>
-                    </p:column>
+                </ui:include>
+            </p:tab>
+            <p:tab title="Mentions">
+                <ui:include src="twitter-timeline.xhtml">
+                    <ui:param name="timeline" value="#{twitterTimelineServiceImpl.mentions}"/>
+                    <ui:param name="id" value="tlMention"/>
 
-                </h:panelGrid>
-                <p:commandButton actionListener="a"
-                                 icon="ui-icon ui-icon-arrowreturnthick-1-w"
-                                 title="Répondre"
-                                 update="tweetList"/>
-                <p:commandButton actionListener="#{twitterTimelineServiceImpl.addToFavorites(tweet.id)}"
-                                 icon="ui-icon ui-icon-star"
-                                 title="Add to favorites"
-                                 update="tweetList"/>
-                <p:commandButton actionListener="#{twitterTimelineServiceImpl.retweet(tweet.id)}"
-                                 icon="retweet"
-                                 title="Retweet"
-                                 update="tweetList"/>
+                </ui:include>
+            </p:tab>
+            <p:tab title="Favoris">
+                <ui:include src="twitter-timeline.xhtml">
+                    <ui:param name="timeline" value="#{twitterTimelineServiceImpl.favorites}"/>
+                    <ui:param name="id" value="tlFavorite"/>
 
-            </p:panel>
-        </p:dataList>
-        <p:poll interval="120" update="tweetList"/>
+                </ui:include>
+            </p:tab>
+        </p:tabView>
+
+
     </h:panelGroup>
 </ui:composition>
 </html>

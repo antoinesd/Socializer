@@ -43,3 +43,34 @@ span.invalid {
     padding-left: 3px;
     color: red;
 }
+
+.tweetInfo{
+    font-size: 0.5em;
+    font-style: italic;
+    color:#6495ed;
+}
+.author {
+    font-size: 8px;
+    font-weight:50;
+}
+
+/*
+Pour effacer la bordure des layout
+*/
+.ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd {
+    border: none;
+}
+
+.verticalTop {
+    vertical-align: top;
+}
+.verticalTopFixed {
+    vertical-align: top;
+    width:200px;
+}
+.verticalBottom {
+    vertical-align: bottom;
+}
+.author {
+    vertical-align: top;
+}

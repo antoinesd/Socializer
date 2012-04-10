@@ -1,24 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-      
+
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition>
     <h:panelGroup id="twittertl" layout="block">
-        <h:inputTextarea value="#{socialClient.status}" cols="60" rows="5"/>
-        <h:commandButton action="#{twitterTimelineServiceImpl.updateStatus(socialClient.status)}"
-                         value="Update your status">
-            <f:ajax render="twittertl" execute="twittertl"/>
-        </h:commandButton>
-        <br/>
-        
-        <p:dataList id="tweetList" var="tweet" type="none"  value="#{twitterTimelineServiceImpl.homeTimeline}">
-        <p:panel><p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
-        <p:graphicImage id="pict" value="#{tweet.profileImageUrl}"  height="48" width="48"/>
-        <h:outputText value="#{tweet.text}" /></p:panel>
-        <br/>
-       </p:dataList>
+
+        <h:panelGrid columns="2" cellpadding="10" columnClasses="verticalTop,verticalBottom">
+            <h:panelGroup>
+                <p:inputTextarea value="#{socialClient.status}" cols="60" rows="5"
+                                 counter="counter" maxlength="140"
+                                 counterTemplate="{0} characters remaining." autoResize="false"/>
+                <h:outputText id="counter"/>
+            </h:panelGroup>
+            <p:commandButton action="#{twitterTimelineServiceImpl.updateStatus(socialClient.status)}"
+                             value="Update your status">
+                <f:ajax render="twittertl" execute="twittertl"/>
+            </p:commandButton>
+            <br/>
+        </h:panelGrid>
+
+        <p:dataList id="tweetList"
+                    var="tweet"
+                    type="none"
+                    value="#{twitterTimelineServiceImpl.homeTimeline}"
+                    style="width:250px;"
+                >
+            <f:facet name="header">
+                Tweets
+            </f:facet>
+            <p:panel>
+                <h:panelGrid columns="3" cellpadding="10" columnClasses="verticalTop,verticalTopFixed,verticalTop">
+                    <p:column>
+                        <p:graphicImage id="pict" value="#{tweet.profileImageUrl}" height="48" width="48"/>
+                        <p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
+                    </p:column>
+                    <p:column style="width:200px;">
+                        <h:outputText value="@#{tweet.fromUser}" styleClass="author"/>
+                        <br/>
+                        <h:outputText value="#{tweet.text}"/>
+                        <br/>
+                        Via <h:link value="#{tweet.source}"/>
+                        <br/>
+                        <h:outputText value="En réponse à #{tweet.inReplyToStatusId}"
+                                      rendered="#{not empty tweet.inReplyToStatusId}"/>
+                    </p:column>
+
+                    <p:column>
+                        <h:outputText value="#{tweet.createdAt}" styleClass="tweetInfo">
+                            <f:converter converterId="org.ocpsoft.PrettyTimeConverter"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <br/>
+                </h:panelGrid>
+
+            </p:panel>
+        </p:dataList>
         <p:poll interval="120" update="tweetList"/>
     </h:panelGroup>
 </ui:composition>
+</html>

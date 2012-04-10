@@ -45,13 +45,18 @@ span.invalid {
 }
 
 .tweetInfo{
-    font-size: 0.5em;
+    font-size: 0.75em;
     font-style: italic;
     color:#6495ed;
 }
+
+.reponse{
+    font-size: 0.85em;
+    font-style: italic;
+}
 .author {
-    font-size: 8px;
-    font-weight:50;
+    font-size: 1em;
+    font-weight:bold;
 }
 
 /*
@@ -66,11 +71,12 @@ Pour effacer la bordure des layout
 }
 .verticalTopFixed {
     vertical-align: top;
-    width:200px;
+    width:400px;
 }
 .verticalBottom {
     vertical-align: bottom;
 }
-.author {
-    vertical-align: top;
+
+.retweet {
+    background-image: url(#{resource[ 'gfx:retweet.png' ]}) !important;
 }

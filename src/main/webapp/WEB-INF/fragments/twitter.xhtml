@@ -7,26 +7,25 @@
         xmlns:p="http://primefaces.org/ui">
 <ui:composition>
     <h:panelGroup id="twittertl" layout="block">
+        <h:panelGrid columns="1">
+            <h:panelGrid columns="2" cellpadding="10" columnClasses="verticalTop,verticalBottom">
 
-        <h:panelGrid columns="2" cellpadding="10" columnClasses="verticalTop,verticalBottom">
-            <h:panelGroup>
-                <p:inputTextarea value="#{socialClient.status}" cols="60" rows="5"
+                <p:inputTextarea value="#{socialClient.status}" cols="50" rows="3"
                                  counter="counter" maxlength="140"
                                  counterTemplate="{0} characters remaining." autoResize="false"/>
-                <h:outputText id="counter"/>
-            </h:panelGroup>
-            <p:commandButton action="#{twitterTimelineServiceImpl.updateStatus(socialClient.status)}"
-                             value="Update your status">
-                <f:ajax render="twittertl" execute="twittertl"/>
-            </p:commandButton>
-            <br/>
+
+                <p:commandButton action="#{twitterTimelineServiceImpl.updateStatus(socialClient.status)}"
+                                 value="Update your status">
+                    <f:ajax render="twittertl" execute="twittertl"/>
+                </p:commandButton>
+            </h:panelGrid>
+            <h:outputText id="counter"/>
         </h:panelGrid>
 
         <p:dataList id="tweetList"
                     var="tweet"
                     type="none"
                     value="#{twitterTimelineServiceImpl.homeTimeline}"
-                    style="width:250px;"
                 >
             <f:facet name="header">
                 Tweets
@@ -42,10 +41,19 @@
                         <br/>
                         <h:outputText value="#{tweet.text}"/>
                         <br/>
-                        Via <h:link value="#{tweet.source}"/>
+                        <!--Via ${tweet.source}"-->
                         <br/>
-                        <h:outputText value="En réponse à #{tweet.inReplyToStatusId}"
-                                      rendered="#{not empty tweet.inReplyToStatusId}"/>
+                        <p:fieldset legend="En réponse à "
+                                    toggleable="true"
+                                    rendered="#{not empty tweet.inReplyToStatusId}"
+                                >
+                            <h:outputText value="@#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).fromUser}" styleClass="author"/>
+                            <br/>
+                            <h:outputText
+                                    value="#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).text}"
+                                    styleClass="reponse"
+                                    />
+                        </p:fieldset>
                     </p:column>
 
                     <p:column>
@@ -54,8 +62,19 @@
                         </h:outputText>
                     </p:column>
 
-                    <br/>
                 </h:panelGrid>
+                <p:commandButton actionListener="a"
+                                 icon="ui-icon ui-icon-arrowreturnthick-1-w"
+                                 title="Répondre"
+                                 update="tweetList"/>
+                <p:commandButton actionListener="#{twitterTimelineServiceImpl.addToFavorites(tweet.id)}"
+                                 icon="ui-icon ui-icon-star"
+                                 title="Add to favorites"
+                                 update="tweetList"/>
+                <p:commandButton actionListener="#{twitterTimelineServiceImpl.retweet(tweet.id)}"
+                                 icon="retweet"
+                                 title="Retweet"
+                                 update="tweetList"/>
 
             </p:panel>
         </p:dataList>

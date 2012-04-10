@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Socializer Application</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+		<p:layoutUnit position="north" header="Welcome to Socializer"
+			size="200">
+			<h:form id="manageConnection">
+				<h:panelGroup
+					rendered="#{(empty currentSession) or !(currentSession.connected)}">
+			Your not connected to a Social Network service. Please choose one in list on the left
+			</h:panelGroup>
+				<h:panelGroup id="connexion"
+					rendered="#{not(empty currentSession) and currentSession.connected}">
+					<p:panelGrid columns="2">
+						<h:graphicImage
+							value="#{currentSession.userProfile.profileImageUrl}" />
+						<h:outputText>
+				Welcome #{currentSession.userProfile.fullName}<br />
+                You are now working with #{currentSession.name}<br />
+						</h:outputText>
+					</p:panelGrid>
+
+					<br />
+					<ui:remove>
+                You can close connexion on
+            <h:commandLink action="#{socialClient.resetConnection}"
+						value="#{currentSession.name}" />
+					<br />
+					</ui:remove>
+                Switch the Social network you want to work with.. :
+            <h:selectOneRadio id="chooseService"
+						value="#{socialClient.currentSessionName}">
+						<f:selectItems value="#{socialClient.sessions}" var="serv"
+							itemValue="#{serv.name}" itemLabel="#{serv.name}" />
+						<f:ajax render="@all" />
+					</h:selectOneRadio>
+				</h:panelGroup>
+			</h:form>
+
+		</p:layoutUnit>
+		<p:layoutUnit position="west" size="200" header="Services available">
+			<h:form>
+				<ul>
+					<ui:repeat var="service"
+						value="#{socialClient.manager.listOfServices}">
+						<li><h:outputLink  value="#"
+								onclick="window.open('startoauth.jsf?service=#{service}','oauth','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=280,height=400,modal=yes')">
+								
+                    #{service}
+                                </h:outputLink></li>
+					</ui:repeat>
+				</ul>
+			</h:form>
+		</p:layoutUnit>
+		<p:layoutUnit id="center" position="center">
+			<ui:insert name="content" />
+		</p:layoutUnit>
+	</p:layout>
+</h:body>
+</html>

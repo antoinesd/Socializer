@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+      
+    <h:panelGroup id="twittertl" layout="block">
+        <h:inputTextarea value="#{socialClient.status}" cols="60" rows="5"/>
+        <h:commandButton action="#{twitterTimelineServiceImpl.updateStatus(socialClient.status)}"
+                         value="Update your status">
+            <f:ajax render="twittertl" execute="twittertl"/>
+        </h:commandButton>
+        <br/>
+        
+        <p:dataList id="tweetList" var="tweet" type="none"  value="#{twitterTimelineServiceImpl.homeTimeline}">
+        <p:panel><p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
+        <p:graphicImage id="pict" value="#{tweet.profileImageUrl}"  height="48" width="48"/>
+        <h:outputText value="#{tweet.text}" /></p:panel>
+        <br/>
+       </p:dataList>
+        <p:poll interval="120" update="tweetList"/>
+    </h:panelGroup>
+</ui:composition>

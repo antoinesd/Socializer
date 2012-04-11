@@ -26,8 +26,9 @@
         <!-- <jboss.bom.version>1.0.0.M6-redhat-1</jboss.bom.version>> -->
         <version.seam-social>3.2.0-SNAPSHOT</version.seam-social>
         <version.primefaces>3.3-SNAPSHOT</version.primefaces>
-
+        <version.primefaces.themes>1.0.4</version.primefaces.themes>
         <version.prettytime>1.0.8.Final</version.prettytime>
+
     </properties>
 
     <repositories>
@@ -207,6 +208,158 @@
             <version>${version.prettytime}</version>
         </dependency>
 
+        <!--Primeface themes-->
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>black-tie</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>blitzer</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>bluesky</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>casablanca</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>cupertino</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>dark-hive</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>dot-luv</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>eggplant</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>excite-bike</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>flick</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>glass-x</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>home</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>hot-sneaks</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>humanity</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>le-frog</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>midnight</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>mint-choc</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>overcast</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>pepper-grinder</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>redmond</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>rocket</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>smoothness</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>south-street</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>start</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>sunny</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>swanky-purse</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>trontastic</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>ui-darkness</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>ui-lightness</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>vader</artifactId>
+            <version>${version.primefaces.themes}</version>
+        </dependency>
+
 
         <!-- Needed for running tests (you may also use TestNG) -->
         <dependency>
@@ -241,7 +394,7 @@
                 annotation processors -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.1</version>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>

@@ -38,7 +38,7 @@ public class HubProducer {
 
     @Facebook
     @ApplicationScoped
-    @OAuthApplication(apiKey = "204631749555557", apiSecret = "5d3132b1448a66d28e5c420b267cd65e", callback = "http://localhost:8080/socializer/callback.jsf")
+    @OAuthApplication(apiKey = "204631749555557", apiSecret = "5d3132b1448a66d28e5c420b267cd65e", callback = "http://localhost:8080/socializer/callback.jsf", scope = "read_stream publish_stream")
     @Produces
     public FacebookServicesHub facebookProducer(FacebookServicesHub service) {
         return service;

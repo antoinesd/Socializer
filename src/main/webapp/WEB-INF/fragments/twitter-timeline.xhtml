@@ -23,12 +23,14 @@
                     <p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
                 </p:column>
                 <p:column style="width:200px;">
+                    <!--<h:outputText value="@#{twitterUserServiceImpl.getUserProfile(tweet.fromUser).fullName}" styleClass="author"/>-->
+                    <!--<br/> -->
                     <h:outputText value="@#{tweet.fromUser}" styleClass="author"/>
                     <br/>
                     <h:outputText value="#{tweet.text}"/>
                     <br/>
-                    ${tweet.languageCode}"
-                    <br/>
+                    <!--${tweet.languageCode}-->
+                    <!--<br/>-->
                     <!--Via ${tweet.source}"-->
                     <br/>
                     <p:fieldset legend="En réponse à "

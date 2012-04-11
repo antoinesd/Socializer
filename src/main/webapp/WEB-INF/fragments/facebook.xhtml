@@ -1,25 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition 
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+
     <h:panelGroup id="facebooktl" layout="block">
-          <h:inputTextarea value="#{socialClient.status}" cols="60" rows="5"/>
-        <h:commandButton action="#{facebookFeed.updateStatus(socialClient.status)}"
-                         value="Update your status">
+        <h:panelGrid columns="2" cellpadding="10" columnClasses="verticalTop,verticalBottom">
+            <p:inputTextarea value="#{socialClient.status}" cols="60" rows="5"/>
+            <p:commandButton action="#{facebookFeed.updateStatus(socialClient.status)}"
+                             value="Update your status">
                 <f:ajax render="facebooktl" execute="facebooktl"/>
-            </h:commandButton>
-            <br/>
-            <p:dataList id="facebookFeed" value="#{facebookFeed.homeFeed}" var="post" type="none">
-            <p:panel> <p:tooltip for="pict" value="#{post.from.name}" showEffect="fold"/>
-            <p:graphicImage id="pict" value="https://graph.facebook.com/#{post.from.id}/picture"/>
-            <h:outputText value="#{post.message}"/>
-            <h:outputText value="#{post.description}" />
-            <p:graphicImage url="#{post.picture}" rendered="#{!(empty post.picture)}"/>
-            <p:graphicImage url="#{post.icon}" rendered="#{!(empty post.icon)}"/>
-            
-            </p:panel>
-            </p:dataList>
+            </p:commandButton>
+        </h:panelGrid>
+        <br/>
+        <p:dataList id="facebookFeed" value="#{facebookFeed.homeFeed}" var="post" type="none">
+            <p:column>
+                <p:panel>
+                    <h:panelGrid columns="3" cellpadding="10" columnClasses="verticalTop,verticalTop">
+                        <h:panelGroup>
+                            <p:graphicImage id="pict" value="https://graph.facebook.com/#{post.from.id}/picture"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <h:outputText value="#{post.from.name}" styleClass="author"/>
+                            <br/>
+                            <h:outputText value="#{post.message}" escape="false" rendered="#{!(empty post.message)}"/>
+                            <br/>
+                            <h:panelGrid columns="3" cellpadding="10"
+                                         columnClasses="verticalTop,verticalTop,verticalTopFixed">
+                                <!-- COL1 -->
+                                <h:panelGroup>
+                                    <p:graphicImage url="#{post.icon}" rendered="#{!(empty post.icon)}"/>
+                                    <!--<br/>-->
+                                    <!--<h:outputText value="TYPE #{post.type}"/>-->
+                                </h:panelGroup>
+                                <!--COL2-->
+                                <h:panelGroup>
+
+                                    <!--POST, CHECKIN, LINK, NOTE,  STATUS,-->
+
+                                    <!--POST VIDEO-->
+                                    <h:panelGroup rendered="#{post.type eq 'VIDEO'}">
+                                        <h:outputLink value="#{post.link}">
+                                            <p:graphicImage url="#{post.picture}"/>
+                                        </h:outputLink>
+
+                                        <p:media value="#{post.link}" width="300" height="200" player="quicktime"
+                                                 rendered="#{post.type eq 'MUSIC'}"/>
+                                        <p:media value="#{post.link}" width="300" height="200" player="flash"
+                                                 rendered="#{post.type eq 'SWF'}"/>
+
+                                    </h:panelGroup>
+                                    <!--POST PHOTO-->
+                                    <h:panelGroup rendered="#{post.type eq 'PHOTO'}">
+                                        <h:outputLink value="#{post.link}">
+                                            <p:graphicImage url="#{post.picture}" rendered="#{!(empty post.picture)}"/>
+                                            <h:outputText value="#{post.name}" rendered="#{empty post.picture}"/>
+                                        </h:outputLink>
+                                    </h:panelGroup>
+                                    <!--POST LINK-->
+                                    <h:panelGroup rendered="#{post.type eq 'LINK'}">
+                                        <h:outputLink value="#{post.link}">
+                                            <h:outputText value="#{post.name}"/>
+                                        </h:outputLink>
+                                        <br/>
+                                        <h:outputText value="#{post.description}" escape="false"
+                                                      rendered="#{!(empty post.description)}"/>
+
+                                    </h:panelGroup>
+
+                                </h:panelGroup>
+
+                                <!--COL3-->
+                                <h:panelGroup>
+                                    <h:outputText value="#{post.description}" escape="false"
+                                                  rendered="#{!(empty post.description) and !(post.type eq 'LINK')}"/>
+                                    <br/>
+
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+                            <!--<h:outputText value="name #{post.name}"/>-->
+                            <!--<br/>-->
+                            <!--<h:outputText value="caption #{post.caption}"/>-->
+                            <!--<br/>-->
+                            <h:panelGrid columns="3">
+                                <h:outputText value="#{post.commentCount} comments"
+                                              rendered="#{!(empty post.commentCount)}"/>
+                                <h:outputText value="#{post.sharesCount} shares"
+                                              rendered="#{!(empty post.sharesCount)}"/>
+                                <h:outputText value="#{post.createdTime}" styleClass="tweetInfo">
+                                    <f:converter converterId="org.ocpsoft.PrettyTimeConverter"/>
+                                </h:outputText>
+                            </h:panelGrid>
+
+                            <br/>
+                            <p:fieldset legend="#{post.commentCount} comments" rendered="#{!(post.commentCount eq 0)}"
+                                        collapsed="true" toggleable="true"
+                                    >
+                                <p:dataList value="#{post.comments}" var="comment" type="none">
+                                    <p:column>
+                                        <p:panel>
+                                            <h:panelGrid columns="2">
+                                                <h:outputText value="#{comment.from.name}"/>
+                                                <h:outputText value="#{comment.message}"/>
+                                            </h:panelGrid>
+                                        </p:panel>
+                                    </p:column>
+                                </p:dataList>
+                            </p:fieldset>
+                        </h:panelGroup>
+
+
+                    </h:panelGrid>
+
+                </p:panel>
+            </p:column>
+        </p:dataList>
     </h:panelGroup>
 </ui:composition>

@@ -1,24 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui:composition
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-      
+
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition>
     <h:panelGroup id="twittertl" layout="block">
-        <h:inputTextarea value="#{socialClient.status}" cols="60" rows="5"/>
-        <h:commandButton action="#{twitterTimelineServiceImpl.updateStatus(socialClient.status)}"
-                         value="Update your status">
-            <f:ajax render="twittertl" execute="twittertl"/>
-        </h:commandButton>
-        <br/>
-        
-        <p:dataList id="tweetList" var="tweet" type="none"  value="#{twitterTimelineServiceImpl.homeTimeline}">
-        <p:panel><p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
-        <p:graphicImage id="pict" value="#{tweet.profileImageUrl}"  height="48" width="48"/>
-        <h:outputText value="#{tweet.text}" /></p:panel>
-        <br/>
-       </p:dataList>
-        <p:poll interval="120" update="tweetList"/>
+        <h:panelGrid columns="1">
+            <h:panelGrid columns="2" cellpadding="10" columnClasses="verticalTop,verticalBottom">
+
+                <p:inputTextarea value="#{socialClient.status}" cols="50" rows="3"
+                                 counter="counter" maxlength="140"
+                                 counterTemplate="{0} characters remaining." autoResize="false"/>
+
+                <p:commandButton action="#{twitterTimelineServiceImpl.updateStatus(socialClient.status)}"
+                                 value="Update your status">
+                    <f:ajax render="twittertl" execute="twittertl"/>
+                </p:commandButton>
+            </h:panelGrid>
+            <h:outputText id="counter"/>
+        </h:panelGrid>
+
+        <p:tabView>
+            <p:tab title="Timeline">
+                <ui:include src="twitter-timeline.xhtml">
+                    <ui:param name="timeline" value="#{twitterTimelineServiceImpl.homeTimeline}"/>
+                    <ui:param name="id" value="tlTimeline"/>
+
+                </ui:include>
+            </p:tab>
+            <p:tab title="Mentions">
+                <ui:include src="twitter-timeline.xhtml">
+                    <ui:param name="timeline" value="#{twitterTimelineServiceImpl.mentions}"/>
+                    <ui:param name="id" value="tlMention"/>
+
+                </ui:include>
+            </p:tab>
+            <p:tab title="Favoris">
+                <ui:include src="twitter-timeline.xhtml">
+                    <ui:param name="timeline" value="#{twitterTimelineServiceImpl.favorites}"/>
+                    <ui:param name="id" value="tlFavorite"/>
+
+                </ui:include>
+            </p:tab>
+        </p:tabView>
+
+
     </h:panelGroup>
 </ui:composition>
+</html>

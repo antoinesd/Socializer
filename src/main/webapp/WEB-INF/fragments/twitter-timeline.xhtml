@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: gbougeard
+  Date: 11/04/12
+  Time: 01:22
+-->
+<html
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:dataList id="#{id}"
+                var="tweet"
+                type="none"
+                value="#{timeline}"
+            >
+        <p:panel>
+            <h:panelGrid columns="3" cellpadding="10" columnClasses="verticalTop,verticalTopFixed,verticalTop">
+                <p:column>
+                    <p:graphicImage id="pict" value="#{tweet.profileImageUrl}" height="48" width="48"/>
+                    <p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
+                </p:column>
+                <p:column style="width:200px;">
+                    <!--<h:outputText value="@#{twitterUserServiceImpl.getUserProfile(tweet.fromUser).fullName}" styleClass="author"/>-->
+                    <!--<br/> -->
+                    <h:outputLink value="https://twitter.com/#!/#{tweet.fromUser}">
+                        <h:outputText value="@#{tweet.fromUser}"
+                                      styleClass="author"/>
+                    </h:outputLink>
+                    <br/>
+                    <h:outputText value="${tweet.text}" escape="false"/>
+                    <br/>
+                    <!--${tweet.languageCode}-->
+                    <!--<br/>-->
+
+                    <p:fieldset legend="En réponse à "
+                                toggleable="true"
+                                rendered="#{not empty tweet.inReplyToStatusId}"
+                            >
+                        <h:outputText value="@#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).fromUser}"
+                                      styleClass="author"/>
+                        <br/>
+                        <h:outputText
+                                value="#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).text}"
+                                styleClass="reponse"
+                                />
+
+                    </p:fieldset>
+                </p:column>
+
+                <p:column>
+                    <h:outputText value="#{tweet.createdAt}" styleClass="tweetInfo">
+                        <f:converter converterId="org.ocpsoft.PrettyTimeConverter"/>
+                    </h:outputText>
+                    <br/>
+                    <h:outputText value="via ${tweet.source}" escape="false"
+                                  styleClass="tweetInfo"/>
+                </p:column>
+
+            </h:panelGrid>
+            <p:commandButton actionListener="a"
+                             icon="ui-icon ui-icon-arrowreturnthick-1-w"
+                             title="Répondre"
+                             update="#{id}"/>
+            <p:commandButton actionListener="#{twitterTimelineServiceImpl.addToFavorites(tweet.id)}"
+                             icon="ui-icon ui-icon-star"
+                             title="Add to favorites"
+                             update="#{id}"/>
+            <p:commandButton actionListener="#{twitterTimelineServiceImpl.retweet(tweet.id)}"
+                             icon="retweet"
+                             title="Retweet"
+                             update="#{id}"/>
+
+        </p:panel>
+    </p:dataList>
+    <p:poll interval="120" update="#{id}"/>
+</ui:composition>
+
+</html>

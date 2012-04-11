@@ -25,14 +25,16 @@
                 <p:column style="width:200px;">
                     <!--<h:outputText value="@#{twitterUserServiceImpl.getUserProfile(tweet.fromUser).fullName}" styleClass="author"/>-->
                     <!--<br/> -->
-                    <h:outputText value="@#{tweet.fromUser}" styleClass="author"/>
+                    <h:outputLink value="https://twitter.com/#!/#{tweet.fromUser}">
+                        <h:outputText value="@#{tweet.fromUser}"
+                                      styleClass="author"/>
+                    </h:outputLink>
                     <br/>
-                    <h:outputText value="#{tweet.text}"/>
+                    <h:outputText value="${tweet.text}" escape="false"/>
                     <br/>
                     <!--${tweet.languageCode}-->
                     <!--<br/>-->
-                    <!--Via ${tweet.source}"-->
-                    <br/>
+
                     <p:fieldset legend="En réponse à "
                                 toggleable="true"
                                 rendered="#{not empty tweet.inReplyToStatusId}"
@@ -44,6 +46,7 @@
                                 value="#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).text}"
                                 styleClass="reponse"
                                 />
+
                     </p:fieldset>
                 </p:column>
 
@@ -51,6 +54,9 @@
                     <h:outputText value="#{tweet.createdAt}" styleClass="tweetInfo">
                         <f:converter converterId="org.ocpsoft.PrettyTimeConverter"/>
                     </h:outputText>
+                    <br/>
+                    <h:outputText value="via ${tweet.source}" escape="false"
+                                  styleClass="tweetInfo"/>
                 </p:column>
 
             </h:panelGrid>

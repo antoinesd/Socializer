@@ -22,15 +22,15 @@
             <h:outputText id="counter"/>
         </h:panelGrid>
 
-        <!--<p:tabView>-->
-            <!--<p:tab title="Timeline">-->
+        <p:tabView>
+            <p:tab title="Timeline">
                 <ui:include src="twitter-timeline.xhtml">
                     <ui:param name="timeline" value="#{twitterTimelineServiceImpl.homeTimeline}"/>
                     <ui:param name="id" value="tlTimeline"/>
 
                 </ui:include>
-            <!--</p:tab>-->
-            <!--<p:tab title="Mentions">
+            </p:tab>
+            <p:tab title="Mentions">
                 <ui:include src="twitter-timeline.xhtml">
                     <ui:param name="timeline" value="#{twitterTimelineServiceImpl.mentions}"/>
                     <ui:param name="id" value="tlMention"/>
@@ -43,8 +43,8 @@
                     <ui:param name="id" value="tlFavorite"/>
 
                 </ui:include>
-            </p:tab>-->
-        <!--</p:tabView>-->
+            </p:tab>
+        </p:tabView>
 
 
     </h:panelGroup>

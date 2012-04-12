@@ -8,78 +8,72 @@
 <h:head>
     <title>Socializer Application</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <h:outputStylesheet name="screen.css" library="css"/>
 </h:head>
 <h:body>
-    
+    <h:outputStylesheet name="screen.css" library="css"/>
     <p:layout fullPage="true">
         <p:layoutUnit position="north" header="Welcome to Socializer"
-                      size="160">
-            
+                      size="200">
+            <h:form id="manageConnection">
                 <h:panelGroup
                         rendered="#{(empty currentSession) or !(currentSession.connected)}">
                     Your not connected to a Social Network service. Please choose one in list on the left
                 </h:panelGroup>
                 <h:panelGroup id="connexion"
                               rendered="#{not(empty currentSession) and currentSession.connected}">
-                    <h:panelGrid columns="3" styleClass="profile">
+                    <p:panelGrid columns="2">
                         <h:graphicImage
                                 value="#{currentSession.userProfile.profileImageUrl}"/>
-                        
-                        <h:panelGroup>
-	                        <h:outputText value="Welcome #{currentSession.userProfile.fullName}"/>
-	                        <br/>
-	                        <h:outputText value="You are now working with #{currentSession.name}"/>
-	                        <br/>
-	                        <h:panelGrid columns="2">
-	                        	<h:outputText value="Choose your theme :"/>
-	                        	<h:form prependId="false">
-					                <p:themeSwitcher style="width:150px" effect="fade" var="t" value="#{socialClient.currentTheme}"
-					                                 id="defaultSwitcher">
-					                    <f:selectItem itemLabel="Choose Theme" itemValue=""/>
-					                    <!--itemLabel="#{theme.name}"-->
-					                    <f:selectItems value="#{availableThemes.themes}"
-					                                   var="theme"
-					                                   itemLabel="#{theme.name}"
-					                                   itemValue="#{theme}"/>
-					                    <p:column>
-					                        <h:graphicImage library="themes" name="${t.image}" width="90" height="60"/>
-					                    </p:column>
-					                    <p:column>
-					                        #{t.name}
-					                    </p:column>
-					                </p:themeSwitcher>
-					            </h:form>
-	                        </h:panelGrid>
-                        </h:panelGroup>
-                        
-		                <h:form id="manageConnection">
-		                    <ui:remove>
-		                        You can close connexion on
-		                        <h:commandLink action="#{socialClient.resetConnection}"
-		                                       value="#{currentSession.name}"/>
-		                        <br/>
-		                    </ui:remove>
-		                    
-		                    <p:panel header="Switch the Social network you want to work with... :">
-			                    <h:selectOneRadio id="chooseService"
-			                                      value="#{socialClient.currentSessionName}">
-			                        <f:selectItems value="#{socialClient.sessions}" var="serv"
-			                                       itemValue="#{serv.name}" itemLabel="#{serv.name}"/>
-			                        <f:ajax render="@all"/>
-		                    	</h:selectOneRadio>
-		                    </p:panel>
-	                    </h:form>
-                    </h:panelGrid>
-                </h:panelGroup>
-        </p:layoutUnit>
-        <p:layoutUnit position="west" size="160" header="Services available">
-            <h:form>
-            	<p:dataList styleClass="unstyled social-icons"
-            		var="service"
-            		value="#{socialClient.manager.listOfServices}">
+                        <h:outputText>
+                            Welcome #{currentSession.userProfile.fullName}<br/>
+                            You are now working with #{currentSession.name}<br/>
+                        </h:outputText>
+                    </p:panelGrid>
 
+                    <br/>
+                    <ui:remove>
+                        You can close connexion on
+                        <h:commandLink action="#{socialClient.resetConnection}"
+                                       value="#{currentSession.name}"/>
+                        <br/>
+                    </ui:remove>
+                    Switch the Social network you want to work with.. :
+                    <h:selectOneRadio id="chooseService"
+                                      value="#{socialClient.currentSessionName}">
+                        <f:selectItems value="#{socialClient.sessions}" var="serv"
+                                       itemValue="#{serv.name}" itemLabel="#{serv.name}"/>
+                        <f:ajax render="@all"/>
+                    </h:selectOneRadio>
+                </h:panelGroup>
+            </h:form>
+            <h:form prependId="false">
+
+
+                <p:themeSwitcher style="width:150px" effect="fade" var="t" value="#{socialClient.currentTheme}"
+                                 id="defaultSwitcher">
+                    <f:selectItem itemLabel="Choose Theme" itemValue=""/>
+                    <!--itemLabel="#{theme.name}"-->
+                    <f:selectItems value="#{availableThemes.themes}"
+                                   var="theme"
+                                   itemLabel="#{theme.name}"
+                                   itemValue="#{theme}"/>
+                    <p:column>
+                        <h:graphicImage library="themes" name="${t.image}" width="90" height="60"/>
+                    </p:column>
+                    <p:column>
+                        #{t.name}
+                    </p:column>
+                </p:themeSwitcher>
+            </h:form>
+
+        </p:layoutUnit>
+        <p:layoutUnit position="west" size="200" header="Services available">
+            <h:form>
+                <ul>
+                    <ui:repeat var="service"
+                               value="#{socialClient.manager.listOfServices}">
+
+                        <!--<li>-->
                         <!--<h:outputLink value="#"
                                       onclick="window.open('startoauth.jsf?service=#{service}','oauth','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=280,height=400,modal=yes')">
                             #{service}
@@ -87,14 +81,16 @@
                         <h:outputLink value="#"
                                       onclick="window.open('startoauth.jsf?service=#{service}','oauth','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=280,height=400,modal=yes')">
 
-                            <h:graphicImage id="serviceImg" library="gfx" name="#{service}.png" height="48" width="48" />
-                            <p:tooltip for="serviceImg" value="Test" showEffect="slide" hideEffect="slide"/>
+                            <h:graphicImage library="gfx" name="#{service}.png" height="48" width="48"/>
                         </h:outputLink>
-                </p:dataList>
+                        <br/>
+                        <!--</li>-->
+                    </ui:repeat>
+                </ul>
             </h:form>
         </p:layoutUnit>
         <p:layoutUnit id="center" position="center">
-        	<ui:insert name="content"/>
+            <ui:insert name="content"/>
         </p:layoutUnit>
     </p:layout>
 </h:body>

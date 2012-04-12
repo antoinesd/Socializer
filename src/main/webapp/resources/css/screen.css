@@ -44,6 +44,10 @@ span.invalid {
     color: red;
 }
 
+p {
+	margin: 0px 0px 1em 0px;
+}
+
 .tweetInfo{
     font-size: 0.75em;
     font-style: italic;
@@ -79,4 +83,42 @@ Pour effacer la bordure des layout
 
 .retweet {
     background-image: url(#{resource[ 'gfx:retweet.png' ]}) !important;
+}
+
+.unstyled .ui-widget-content {
+	border: none;
+}
+
+.unstyled ul {
+	list-style: none;
+}
+
+.social-icons li {
+	margin: 5px 0px;
+}
+
+.profile > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+.timeline > .ui-datalist-content {
+	border-radius: 5px;
+}
+
+.timeline .status {
+	border: 0px;
+	border-bottom: 1px solid #DDDDDD;
+	padding: 10px;
+}
+
+.timeline .status td {
+	padding: 0px 15px 0px 0px;
+}
+
+.timeline .status:last-child {
+	border: 0px;
+}
+
+.timeline .status .actions {
+	margin-top: 10px;
 }

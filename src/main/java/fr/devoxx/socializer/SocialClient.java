@@ -42,6 +42,9 @@ import java.util.Map;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
+
 @Named
 @SessionScoped
 public class SocialClient implements Serializable {

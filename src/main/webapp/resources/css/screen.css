@@ -1,9 +1,15 @@
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #EAECEE;
+    background-color: #505050;
     font-family: Verdana, sans-serif;
     font-size: 0.9em;
+}
+
+form {
+	margin-bottom: 0px;
+}
+
+label {
+	display: inline;
 }
 
 #container {
@@ -44,39 +50,104 @@ span.invalid {
     color: red;
 }
 
-.tweetInfo{
-    font-size: 0.75em;
-    font-style: italic;
-    color:#6495ed;
-}
 
-.reponse{
+
+.reponse {
     font-size: 0.85em;
     font-style: italic;
-}
-.author {
-    font-size: 1em;
-    font-weight:bold;
-}
-
-/*
-Pour effacer la bordure des layout
-*/
-.ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd {
-    border: none;
 }
 
 .verticalTop {
     vertical-align: top;
 }
-.verticalTopFixed {
-    vertical-align: top;
-    width:400px;
-}
+
 .verticalBottom {
     vertical-align: bottom;
 }
 
+.avatar {
+	vertical-align: top;
+	width: 70px;
+	text-align: center;
+}
+
 .retweet {
     background-image: url(#{resource[ 'gfx:retweet.png' ]}) !important;
+}
+
+.title {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.title h1 {
+	color: #999999;
+	font-size: 60px;
+	letter-spacing: -1px;
+	line-height: 65px;
+	text-shadow: 0px 3px 8px #2A2A2A;
+}
+
+.title h6 {
+	font-size: 16px;
+	line-height: 30px;
+}
+
+ul.social-services li {
+	float: left;
+	margin-right: 10px;
+}
+
+ul.social-services li:last-child {
+	margin-right: 0px;
+}
+
+.well h6 {
+	margin-bottom: 5px;
+}
+
+.tweet-area {
+	width: 98%;
+	height: 56px;
+	overflow: hidden;
+}
+
+.rounded-5, .rounded-5 .ui-widget-content {
+	border-radius: 5px; 
+}
+
+.timeline-content .status {
+	padding: 10px;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+.timeline-content .status:last-child {
+	border-bottom: 0px;
+}
+
+.tweet .author {
+	margin-right: 10px;
+}
+
+.tweet .author:hover {
+	text-decoration: none;
+}
+
+.tweet .author:hover .label {
+	background-color: #B94A48;
+}
+
+.tweet .tweetInfo {
+    font-style: italic;
+    color:#999999;
+}
+
+.status .actions {
+	margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+	.tweet-area {
+		height: 77px;
+	}
 }

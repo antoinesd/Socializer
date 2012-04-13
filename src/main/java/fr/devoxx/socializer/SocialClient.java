@@ -47,6 +47,9 @@ import org.jboss.solder.logging.Logger;
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Maps;
+
 @Named
 @SessionScoped
 public class SocialClient implements Serializable {

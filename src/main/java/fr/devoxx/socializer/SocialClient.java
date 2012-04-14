@@ -16,16 +16,12 @@
  */
 package fr.devoxx.socializer;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Maps;
-import org.jboss.seam.social.MultiServicesManager;
-import org.jboss.seam.social.SocialNetworkServicesHub;
-import org.jboss.seam.social.event.SocialEvent;
-import org.jboss.seam.social.event.StatusUpdated;
-import org.jboss.seam.social.oauth.OAuthService;
-import org.jboss.seam.social.oauth.OAuthSession;
-import org.jboss.seam.social.oauth.OAuthToken;
-import org.jboss.solder.logging.Logger;
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.event.Observes;
@@ -35,12 +31,15 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
-import static com.google.common.collect.Lists.newArrayList;
+import org.jboss.seam.social.MultiServicesManager;
+import org.jboss.seam.social.SocialNetworkServicesHub;
+import org.jboss.seam.social.event.SocialEvent;
+import org.jboss.seam.social.event.StatusUpdated;
+import org.jboss.seam.social.oauth.OAuthService;
+import org.jboss.seam.social.oauth.OAuthSession;
+import org.jboss.seam.social.oauth.OAuthToken;
+import org.jboss.solder.logging.Logger;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
@@ -60,7 +59,6 @@ public class SocialClient implements Serializable {
 
     private static final String DEFAULT_THEME = "aristo";
     private String currentTheme = DEFAULT_THEME;
-
 
     @Inject
     private Logger log;

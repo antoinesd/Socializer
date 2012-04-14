@@ -1,81 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  Created by IntelliJ IDEA.
-  User: gbougeard
-  Date: 11/04/12
-  Time: 01:22
--->
-<html
-        xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:f="http://java.sun.com/jsf/core"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:p="http://primefaces.org/ui">
-<ui:composition>
-    <p:dataList id="#{id}"
-                var="tweet"
-                type="none"
-                value="#{timeline}"
-            >
-        <p:panel>
-            <h:panelGrid columns="3" cellpadding="10" columnClasses="verticalTop,verticalTopFixed,verticalTop">
-                <p:column>
-                    <p:graphicImage id="pict" value="#{tweet.profileImageUrl}" height="48" width="48"/>
-                    <p:tooltip for="pict" value="#{tweet.fromUser}" showEffect="fold"/>
-                </p:column>
-                <p:column style="width:200px;">
-                    <!--<h:outputText value="@#{twitterUserServiceImpl.getUserProfile(tweet.fromUser).fullName}" styleClass="author"/>-->
-                    <!--<br/> -->
-                    <h:outputLink value="https://twitter.com/#!/#{tweet.fromUser}">
-                        <h:outputText value="@#{tweet.fromUser}"
-                                      styleClass="author"/>
-                    </h:outputLink>
-                    <br/>
-                    <h:outputText value="${tweet.text}" escape="false"/>
-                    <br/>
-                    <!--${tweet.languageCode}-->
-                    <!--<br/>-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui">
+    <p:dataList id="#{id}" var="tweet" type="none" value="#{timeline}">
+        <p:column>
+            <div class="status tweet">
+                <h:panelGrid columns="2" width="100%" columnClasses="avatar,verticalTop">
+                    <h:panelGroup>
+                        <p:graphicImage id="pict" value="#{tweet.profileImageUrl}" height="48" width="48"
+                            styleClass="rounded-5 tooltip-top" title="#{tweet.fromUser}" />
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <!--<h:outputText value="@#{twitterUserServiceImpl.getUserProfile(tweet.fromUser).fullName}" styleClass="author"/>-->
+                        <!--<br/> -->
 
-                    <p:fieldset legend="En réponse à "
-                                toggleable="true"
-                                rendered="#{not empty tweet.inReplyToStatusId}"
-                            >
-                        <h:outputText value="@#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).fromUser}"
-                                      styleClass="author"/>
-                        <br/>
-                        <h:outputText
-                                value="#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).text}"
-                                styleClass="reponse"
-                                />
+                        <p>
+                            <h:outputLink value="https://twitter.com/#!/#{tweet.fromUser}" styleClass="author">
+                                <h:outputText value="@#{tweet.fromUser}" styleClass="label" />
+                            </h:outputLink>
 
-                    </p:fieldset>
-                </p:column>
+                            <h:outputText value="#{tweet.createdAt}" styleClass="statusInfo">
+                                <f:converter converterId="org.ocpsoft.PrettyTimeConverter" />
+                            </h:outputText>
 
-                <p:column>
-                    <h:outputText value="#{tweet.createdAt}" styleClass="tweetInfo">
-                        <f:converter converterId="org.ocpsoft.PrettyTimeConverter"/>
-                    </h:outputText>
-                    <br/>
-                    <h:outputText value="via ${tweet.source}" escape="false"
-                                  styleClass="tweetInfo"/>
-                </p:column>
+                            <h:panelGroup rendered="#{!empty(tweet.source)}">
+                                <h:outputText value=", via  #{tweet.source}" escape="false" styleClass="statusInfo" />
+                            </h:panelGroup>
+                        </p>
 
-            </h:panelGrid>
-            <p:commandButton actionListener="a"
-                             icon="ui-icon ui-icon-arrowreturnthick-1-w"
-                             title="Répondre"
-                             update="#{id}"/>
-            <p:commandButton actionListener="#{twitterTimelineServiceImpl.addToFavorites(tweet.id)}"
-                             icon="ui-icon ui-icon-star"
-                             title="Add to favorites"
-                             update="#{id}"/>
-            <p:commandButton actionListener="#{twitterTimelineServiceImpl.retweet(tweet.id)}"
-                             icon="retweet"
-                             title="Retweet"
-                             update="#{id}"/>
+                        <p>
+                            <h:outputText value="${tweet.text}" escape="false" />
+                        </p>
+                        <!--${tweet.languageCode}-->
+                        <!--<br/>-->
 
-        </p:panel>
+                        <h:panelGroup rendered="#{not empty tweet.inReplyToStatusId}" layout="block" styleClass="panel-collapse rounded-5">
+                            <div class="header">
+                                <a href="#tweet-answer-#{tweet.id}" data-toggle="collapse">
+                                    <h:outputText value="En réponse à @#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).fromUser}"/>
+                                </a>
+                            </div>
+                            
+                            <div id="tweet-answer-#{tweet.id}" class="content collapse">
+                                <div class="inner">
+                                    <h:outputText value="#{twitterTimelineServiceImpl.getStatus(tweet.inReplyToStatusId).text}"/>
+                                </div>
+                            </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGrid>
+
+                <div class="actions">
+                
+                    <p:commandLink actionListener="a" update="#{id}" styleClass="btn">
+                        <i class="icon-share-alt"></i>
+                        <h:outputText value="Answer" />
+                    </p:commandLink>
+                    
+                    <p:commandLink actionListener="#{twitterTimelineServiceImpl.addToFavorites(tweet.id)}" update="#{id}" styleClass="btn"
+                        rendered="#{!tweet.favorited}">
+                        <i class="icon-star"></i>
+                        <h:outputText value="Add to favorites" />
+                    </p:commandLink>
+                    
+                    <p:commandLink actionListener="#{twitterTimelineServiceImpl.removeFromFavorites(tweet.id)}" update="#{id}" styleClass="btn btn-primary btn-dual"
+                        rendered="#{tweet.favorited}">
+                        <i class="icon-star icon-white"></i>
+                        <h:outputText value="Favorites" styleClass="default-content" />
+                        <h:outputText value="Remove from favorites" styleClass="alt-content" />
+                    </p:commandLink>
+                    
+                    <p:commandLink actionListener="#{twitterTimelineServiceImpl.retweet(tweet.id)}" update="#{id}" styleClass="btn">
+                        <i class="icon-retweet"></i>
+                        <h:outputText value="Retweet" />
+                   </p:commandLink>
+                   
+                </div>
+            </div>
+        </p:column>
     </p:dataList>
-    <p:poll interval="120" update="#{id}"/>
+    <p:poll interval="120" update="#{id}" />
 </ui:composition>
-
-</html>

@@ -12,35 +12,6 @@ label {
 	display: inline;
 }
 
-#container {
-    margin: 0 auto;
-    padding: 0 20px 10px 20px;
-    border: 1px solid #666666;
-    width: 865px; /* subtract 40px from banner width for padding */
-    background: #FFFFFF url(#{request.contextPath}/resources/gfx/banner.png) no-repeat;
-    padding-top: 110px;
-}
-
-#sidebar {
-    font-size: 0.9em;
-    width: 225px;
-    float: right;
-    border: 1px solid #666666;
-    background: #EAECEE;
-    padding: 0 15px 5px 15px;
-}
-
-#sidebar ul {
-    padding-left: 30px;
-}
-
-#footer {
-    clear: both;
-    text-align: center;
-    color: #666666;
-    font-size: 0.85em;
-}
-
 code {
     font-size: 1.1em;
 }
@@ -49,8 +20,6 @@ span.invalid {
     padding-left: 3px;
     color: red;
 }
-
-
 
 .reponse {
     font-size: 0.85em;
@@ -69,10 +38,6 @@ span.invalid {
 	vertical-align: top;
 	width: 70px;
 	text-align: center;
-}
-
-.retweet {
-    background-image: url(#{resource[ 'gfx:retweet.png' ]}) !important;
 }
 
 .title {
@@ -116,28 +81,33 @@ ul.social-services li:last-child {
 	border-radius: 5px; 
 }
 
-.timeline-content .status {
+.timeline-content, .comments {
+	background-color: white;
+	border: 1px solid #DDDDDD;
+}
+
+.timeline-content .status, .comments .comment {
 	padding: 10px;
 	border-bottom: 1px solid #DDDDDD;
 }
 
-.timeline-content .status:last-child {
+.timeline-content .status:last-child, .comments .comment:last-child {
 	border-bottom: 0px;
 }
 
-.tweet .author {
+.status .author {
 	margin-right: 10px;
 }
 
-.tweet .author:hover {
+.status a.author:hover {
 	text-decoration: none;
 }
 
-.tweet .author:hover .label {
+.status a.author:hover .label {
 	background-color: #B94A48;
 }
 
-.tweet .tweetInfo {
+.status .statusInfo {
     font-style: italic;
     color:#999999;
 }
@@ -146,8 +116,70 @@ ul.social-services li:last-child {
 	margin-top: 10px;
 }
 
+.status .actions a {
+	margin-right: 10px;
+}
+
+.status .actions a:last-child {
+	margin-right: 0px;
+}
+
+.btn i {
+	margin-right: 5px;
+}
+
+.btn-dual:hover  {
+	background-color:#bd362f;
+	background-image:-moz-linear-gradient(top, #ee5f5b, #bd362f);
+	background-image:-ms-linear-gradient(top, #ee5f5b, #bd362f);
+	background-image:-webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#bd362f));
+	background-image:-webkit-linear-gradient(top, #ee5f5b, #bd362f);
+	background-image:-o-linear-gradient(top, #ee5f5b, #bd362f);
+	background-image:linear-gradient(top, #ee5f5b, #bd362f);
+	background-repeat:repeat-x;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee5f5b', endColorstr='#bd362f', GradientType=0);
+	border-color:#bd362f #bd362f #802420;border-color:rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	filter:progid:dximagetransform.microsoft.gradient(enabled=false);
+}
+
+
+.btn-dual:hover .default-content, .btn-dual .alt-content {
+	display: none;
+}
+
+.btn-dual:hover .alt-content, .btn-dual .default-content {
+	display: inline;
+}
+
+.facebook-post-icon {
+	margin-left: 10px;
+	position: relative;
+	top: -2px;
+}
+
+.comment {
+	padding: 10px;
+}
+
+.panel-collapse {
+	border: 1px solid #E5E5E5;
+}
+
+.panel-collapse .header {
+	padding: 8px 15px;
+}
+
+.panel-collapse .content .inner {
+	border-top: 1px solid #E5E5E5;
+	padding: 9px 15px;
+}
+
 @media (max-width: 767px) {
 	.tweet-area {
 		height: 77px;
+	}
+	
+	.actions a {
+		margin-bottom: 10px;
 	}
 }

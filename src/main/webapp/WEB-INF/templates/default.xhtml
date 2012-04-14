@@ -9,16 +9,19 @@
     <h:outputStylesheet name="bootstrap.min.css" library="css" />
     <h:outputStylesheet name="bootstrap-responsive.min.css" library="css" />
     <h:outputStylesheet name="screen.css" library="css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <h:outputScript name="bootstrap.min.js" library="javascript" />
     <h:outputScript name="main.js" library="javascript" />
 </h:head>
 <h:body>
 
-    <a target="_blank" href="https://github.com/antoinesd/Socializer" class="hidden-phone">
-        <img style="position:fixed;top:0;left:0;border:0;z-index:5000" src="https://a248.e.akamai.net/assets.github.com/img/5d21241b64dc708fcbb701f68f72f41e9f1fadd6/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub"/>
-      </a>
-
-    <div class="container">
+    <a target="_blank" href="https://github.com/antoinesd/Socializer" class="hidden-phone"> <img
+        style="position: fixed; top: 0; left: 0; border: 0; z-index: 5000"
+        src="https://a248.e.akamai.net/assets.github.com/img/5d21241b64dc708fcbb701f68f72f41e9f1fadd6/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67"
+        alt="Fork me on GitHub" />
+    </a>
+    
+    <h:panelGroup id="container" styleClass="container" layout="block">
         <div class="row">
             <div class="span12">
                 <div class="title">
@@ -47,7 +50,7 @@
                     <h:panelGroup rendered="#{not(empty currentSession) and currentSession.connected}">
                         <h:panelGrid columns="2" width="100%" columnClasses="avatar,verticalTop">
                             <h:graphicImage value="#{currentSession.userProfile.profileImageUrl}" />
-                            
+
                             <h:panelGroup>
                                 <p>
                                     <h:outputText value="#{currentSession.userProfile.fullName}" />
@@ -60,53 +63,33 @@
 
                         <h6>Switch to another Social network</h6>
                         <h:form>
-                            <h:selectOneRadio id="chooseService" value="#{socialClient.currentSessionName}">
+                            <h:selectOneRadio id="chooseService" value="#{socialClient.currentSessionName}"
+                                layout="pageDirection">
                                 <f:selectItems value="#{socialClient.sessions}" var="serv" itemValue="#{serv.name}"
                                     itemLabel="#{serv.name}" />
-                                <f:ajax render="@all" />
+                                <f:ajax render=":container" onevent="triggerAllData" />
                             </h:selectOneRadio>
                         </h:form>
                     </h:panelGroup>
                 </div>
-                
+
                 <div class="well">
                     <h6>Available services</h6>
-                    
+
                     <h:form>
                         <ul class="unstyled social-services clearfix">
                             <ui:repeat var="service" value="#{socialClient.manager.listOfServices}">
-                                <li>
-                                    <h:outputLink value="#"
+                                <li><h:outputLink value="#"
                                         onclick="window.open('startoauth.jsf?service=#{service}','oauth','toolbar=0,location=0,directories=0,status=0,menubar=0,scrollbars=0,resizable=0,width=400,height=400,modal=yes')">
-                                        <h:graphicImage id="serviceIcon" library="gfx" name="#{service}.png" height="48" width="48" styleClass="tooltip-bottom" title="#{service}" />
-                                    </h:outputLink>
-                                </li>
+                                        <h:graphicImage id="serviceIcon" library="gfx" name="#{service}.png" height="48"
+                                            width="48" styleClass="tooltip-bottom" title="#{service}" />
+                                    </h:outputLink></li>
                             </ui:repeat>
                         </ul>
                     </h:form>
                 </div>
-
-                <div class="well">
-                    <h6>Choose your theme</h6>
-
-                    <h:form prependId="false">
-                        <p:themeSwitcher style="width:150px" effect="fade" var="t" value="#{socialClient.currentTheme}"
-                            id="defaultSwitcher">
-                            <f:selectItem itemLabel="Choose Theme" itemValue="" />
-                            <!--itemLabel="#{theme.name}"-->
-                            <f:selectItems value="#{availableThemes.themes}" var="theme" itemLabel="#{theme.name}"
-                                itemValue="#{theme}" />
-                            <p:column>
-                                <h:graphicImage library="themes" name="${t.image}" width="90" height="60" />
-                            </p:column>
-                            <p:column>
-                                <h:outputText value="#{t.name}" />
-                            </p:column>
-                        </p:themeSwitcher>
-                    </h:form>
-                </div>
             </div>
         </div>
-    </div>
+    </h:panelGroup>
 </h:body>
 </html>

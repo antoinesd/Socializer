@@ -20,8 +20,6 @@ import static com.google.common.collect.Lists.newArrayList;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -41,11 +39,7 @@ import org.jboss.seam.social.event.StatusUpdated;
 import org.jboss.seam.social.oauth.OAuthService;
 import org.jboss.seam.social.oauth.OAuthSession;
 import org.jboss.seam.social.oauth.OAuthToken;
-import org.jboss.seam.social.twitter.model.Tweet;
 import org.jboss.solder.logging.Logger;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Maps;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Maps;
@@ -65,7 +59,6 @@ public class SocialClient implements Serializable {
 
     private static final String DEFAULT_THEME = "aristo";
     private String currentTheme = DEFAULT_THEME;
-
 
     @Inject
     private Logger log;
@@ -190,33 +183,6 @@ public class SocialClient implements Serializable {
      */
     public void setSelectedService(String selectedService) {
         this.selectedService = selectedService;
-    }
-    
-    /**
-     * A list of fake tweets in order to improve design
-     * without consuming rate limit.
-     * @return
-     */
-    public List<Tweet> getDebugTweets()
-    {
-    	List<Tweet> result = new ArrayList<Tweet>();
-    	String text = "Here is a fake tweet like all other";
-    	Date createdAt = new Date();
-    	String fromUser = "paul_dijou";
-    	String profileImageUrl = "http://a1.twimg.com/profile_images/1380912173/Screen_shot_2011-06-03_at_7.35.36_PM_normal.png";
-    	Long toUserId = 1L;
-    	Long fromUserId = 2L;
-    	String languageCode = "en";
-    	String source = "Web";
-    	
-    	for(int i = 0; i < 30; ++i)
-    	{
-    		long id = 10000L + i;
-    		Tweet fakeTweet = new Tweet(id, text, createdAt, fromUser, profileImageUrl, toUserId, fromUserId, languageCode, source);
-    		result.add(fakeTweet);
-    	}
-    	
-    	return result;
     }
 
 }
